@@ -25,5 +25,3 @@ RUN rm -f jtreg-5.0-b01.tar.gz
 COPY generate /
 RUN chmod +x /generate
 RUN dos2unix /generate
-
-ENTRYPOINT ["/bin/bash", "/generate"]
