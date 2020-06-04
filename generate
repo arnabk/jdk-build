@@ -1,0 +1,16 @@
+# !/bin/bash
+
+cd /jdk${JDK_CUR_VERSION}
+
+echo "Configure JDK build"
+bash configure --with-boot-jdk=../jdk-13 --with-jtreg=../jtreg
+
+echo "Start JDK build "
+make images
+
+./build/*/images/jdk/bin/java -version
+cp -R ./build/*/images/jdk/ /jdk-build
+
+# TODO:
+# echo "Running unit tests"
+# make run-test-tier1
