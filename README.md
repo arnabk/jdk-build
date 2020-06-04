@@ -12,7 +12,7 @@ This project is not complete
 
     docker build -t jdk-build .
     
-## Start a container to get the generated build
+## Start a container to get the generate build
 
     docker run -it --rm -v c:/jdk-build:/jdk14u jdk-build
     
