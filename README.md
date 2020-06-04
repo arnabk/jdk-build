@@ -1,5 +1,9 @@
 # jdk-build
 
+## Pre-requisite
+
+Install [docker](https://docs.docker.com/docker-for-windows/install/)
+
 ## TODO
 
 This project is not complete
@@ -12,4 +16,4 @@ This project is not complete
 
     docker run -it --rm -v c:/jdk-build:/jdk14u jdk-build
     
-Once you start the container, it will run build process to generate JDK binaries and then run some unit test using jtreg. After the build finishes, it will store all files under `c:/jdk-build`
+Once you start the container, it will run build process to generate JDK binaries and then run some unit test using jtreg. After the build finishes, it will store all files under `c:/jdk-build`. Change the path `c:/jdk-build` according to your host OS.
