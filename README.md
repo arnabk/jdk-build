@@ -10,6 +10,6 @@ This project is not complete
     
 ## Start a container to get the generated build
 
-    docker run -it --rm -v c:/jdk-build:/jdk14u bash
+    docker run -it --rm -v c:/jdk-build:/jdk14u
     
-Once you start the container, you can get the build files from c:/jdk-build
+Once you start the container, it will run build process to generate JDK binaries and then run some unit test using jtreg. After the build finishes, it will store all files under c:/jdk-build
