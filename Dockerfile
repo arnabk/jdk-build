@@ -1,27 +1,18 @@
-FROM ubuntu:20.04
-
-RUN apt update
+FROM ubuntu:19.10
 
 ARG DEBIAN_FRONTEND=noninteractive
 ENV TZ=US/Mountain
-ENV JDK_CUR_VERSION=14u
-ENV JDK_PREV_VERSION=13u
+ENV JDK_CUR_VERSION=14
+ENV JDK_PREV_VERSION=13
 ENV JTREG_VERSION=5.0-b01
 
-RUN apt install git wget autoconf build-essential zip unzip libx11-dev libxext-dev libxrender-dev libxrandr-dev libxtst-dev libxt-dev libcups2-dev libfontconfig1-dev libasound2-dev file dos2unix -y
+RUN apt update
 
-RUN git clone https://github.com/openjdk/jdk${JDK_CUR_VERSION}.git --depth=1
+RUN apt install git wget autoconf build-essential zip unzip libx11-dev libxext-dev libxrender-dev libxrandr-dev libxtst-dev libxt-dev libcups2-dev libfontconfig1-dev libasound2-dev file openjdk-${JDK_PREV_VERSION}-jdk openjdk-8-jdk libffi-dev libelf-dev -y
 
-# TODO: Find out if we could use source instead of binary. If yes, we could use git to download code
-RUN wget https://download.java.net/openjdk/jdk13/ri/openjdk-13+33_linux-x64_bin.tar.gz
+RUN git clone https://github.com/openjdk/jdk${JDK_CUR_VERSION}u.git --depth=1
 
-RUN tar xvf openjdk-13+33_linux-x64_bin.tar.gz && rm -fR openjdk-13+33_linux-x64_bin.tar.gz
-
-# TODO: Build from source
-RUN wget https://ci.adoptopenjdk.net/view/Dependencies/job/jtreg/lastSuccessfulBuild/artifact/jtreg-5.0-b01.tar.gz
-RUN tar xf jtreg-5.0-b01.tar.gz
-RUN rm -f jtreg-5.0-b01.tar.gz
+RUN git clone https://github.com/openjdk/jtreg --depth=1
+RUN cd jtreg && sh make/build-all.sh /usr/lib/jvm/java-8-openjdk-${arch}
 
 COPY generate /
-RUN chmod +x /generate
-RUN dos2unix /generate
