@@ -1,10 +1,11 @@
-FROM ubuntu:19.10
+FROM ubuntu:20.04
 
 ARG DEBIAN_FRONTEND=noninteractive
 ENV TZ=US/Mountain
 ENV JDK_CUR_VERSION=14
 ENV JDK_PREV_VERSION=13
 ENV JTREG_VERSION=5.0-b01
+ENV VENDOR_NAME=J-Class
 
 RUN apt update
 
@@ -13,6 +14,6 @@ RUN apt install git wget autoconf build-essential zip unzip libx11-dev libxext-d
 RUN git clone https://github.com/openjdk/jdk${JDK_CUR_VERSION}u.git --depth=1
 
 RUN git clone https://github.com/openjdk/jtreg --depth=1
-RUN cd jtreg && sh make/build-all.sh /usr/lib/jvm/java-8-openjdk-${arch}
+RUN arch=$(dpkg --print-architecture) && cd jtreg && sh make/build-all.sh /usr/lib/jvm/java-8-openjdk-${arch}
 
 COPY generate /
