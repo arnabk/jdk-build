@@ -2,15 +2,23 @@
 
 cd /jdk${JDK_CUR_VERSION}u
 arch=$(dpkg --print-architecture)
+build_version=$(date +"%Y.%m.%d")
 
 echo "Configure JDK build"
-bash configure --with-boot-jdk=/usr/lib/jvm/java-${JDK_PREV_VERSION}-openjdk-${arch} --with-jtreg=/jtreg-git/build/images/jtreg
+bash configure \
+  --with-boot-jdk=/usr/lib/jvm/java-${JDK_PREV_VERSION}-openjdk-${arch} \
+  --with-jtreg=/jtreg/build/images/jtreg \
+  --with-vendor-name=${VENDOR_NAME}
+# TODO
+#  --with-version-string=${build_version}
 
 echo "Start JDK build "
 make images
 
 ./build/*/images/jdk/bin/java -version
-cp -R ./build/*/images/jdk/ /jdk-build
 
-# echo "Running unit tests"
-# make run-test-tier1
+echo "Running unit tests"
+# TODO: make run-test-tier1
+# make test
+
+cp -R ./build /jdk-build
